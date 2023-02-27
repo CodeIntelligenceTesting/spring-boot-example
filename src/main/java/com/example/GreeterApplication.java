@@ -26,15 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class GreeterApplication {
   @GetMapping("/hello")
-  public String sayHello(@RequestParam(required = false, defaultValue = "World") String name) {
-    return "Hello " + name;
-  }
-
-  @GetMapping("/insecure-hello")
   public String insecureHello(@RequestParam(required = false, defaultValue = "World") String name)
-      throws Error {
-    if (name.equals("attacker")) {
-      throw new Error("We panic when saying hello to an attacker!");
+      throws Exception {
+    if (name.equals("Attacker")) {
+      throw new Exception("We panic when trying to greet an attacker!");
     }
     return "Hello " + name;
   }

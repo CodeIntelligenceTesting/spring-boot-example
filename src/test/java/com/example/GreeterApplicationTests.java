@@ -44,32 +44,27 @@ public class GreeterApplicationTests {
   }
 
   @Test
-  public void unitTestShouldPass() throws Exception {
+  public void unitTestHelloMaven() throws Exception {
     mockMvc.perform(get("/hello").param("name", "Maven"));
   }
 
   @Test
-  public void unitTestShouldFail() throws Exception {
-    mockMvc.perform(get("/buggy-hello").param("name", "error"));
+  public void unitTestHelloDeveloper() throws Exception {
+    mockMvc.perform(get("/hello").param("name", "Developer"));
+  }
+
+  @Test
+  public void unitTestHelloSpringBoot() throws Exception {
+    mockMvc.perform(get("/hello").param("name", "Spring Boot"));
   }
 
   @FuzzTest(maxDuration = "10s")
-  public void fuzzTestShouldPass(FuzzedDataProvider data) throws Exception {
+  public void fuzzTestHello(FuzzedDataProvider data) throws Exception {
     if (!beforeCalled) {
       throw new RuntimeException("BeforeEach was not called");
     }
 
     String name = data.consumeRemainingAsString();
     mockMvc.perform(get("/hello").param("name", name));
-  }
-
-  @FuzzTest(maxDuration = "10s")
-  public void fuzzTestShouldFail(FuzzedDataProvider data) throws Exception {
-    if (!beforeCalled) {
-      throw new RuntimeException("BeforeEach was not called");
-    }
-
-    String name = data.consumeRemainingAsString();
-    mockMvc.perform(get("/insecure-hello").param("name", name));
   }
 }
