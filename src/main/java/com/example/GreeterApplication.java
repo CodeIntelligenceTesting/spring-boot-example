@@ -28,10 +28,10 @@ class GreeterApplication {
   @GetMapping("/hello")
   public String insecureHello(@RequestParam(required = false, defaultValue = "World") String name)
       throws Exception {
-    if (name.equals("Attacker")) {
+    if (name.equalsIgnoreCase("attacker")) {
       throw new Exception("We panic when trying to greet an attacker!");
     }
-    return "Hello " + name;
+    return "Hello " + name + "!";
   }
 
   public static void main(String[] args) {

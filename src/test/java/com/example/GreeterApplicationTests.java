@@ -44,18 +44,13 @@ public class GreeterApplicationTests {
   }
 
   @Test
-  public void unitTestHelloMaven() throws Exception {
-    mockMvc.perform(get("/hello").param("name", "Maven"));
-  }
-
-  @Test
   public void unitTestHelloDeveloper() throws Exception {
     mockMvc.perform(get("/hello").param("name", "Developer"));
   }
 
   @Test
-  public void unitTestHelloSpringBoot() throws Exception {
-    mockMvc.perform(get("/hello").param("name", "Spring Boot"));
+  public void unitTestHelloHacker() throws Exception {
+    mockMvc.perform(get("/hello").param("name", "Hacker"));
   }
 
   @FuzzTest(maxDuration = "10s")
