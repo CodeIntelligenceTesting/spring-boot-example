@@ -4,11 +4,17 @@
 </a>
 </div>
 
-# Spring Boot Example
-A simple Spring Boot demo application to demonstrate how to perform API testing with [cifuzz](https://github.com/CodeIntelligenceTesting/cifuzz). 
-cifuzz is a CLI interface that makes it easy to develop, run, and analyze fuzz tests.
+# API Testing
+Building robust APIs is an important and challenging endeavor that requires thorough testing.
+While unit tests are indispensable to ensure the functional correctness of APIs, they are not
+enough to address the security and reliability issues. In unit testing, we test the 
+scenarios that we are aware of. However, there are scenarios unknown to us that lead to 
+security vulnerabilities or performance problems.
 
-## Introduction
+In this example, we demonstrate how you can perform automated API testing for security and reliability issues
+with JUnit. This is enabled by the JUnit integration provided by CI Fuzz.
+
+## Demo Spring Boot Application
 The demo application offers a single REST API endpoint `hello` that can be called a `name` parameter, and it replies
 with `"Hello <name>!"`. We made the endpoint fail when the provided name is equal to `attacker` ignoring case. We will
 demonstrate how you can use CI Fuzz with our JUnit 5 integration to test this application. We will also show how 
