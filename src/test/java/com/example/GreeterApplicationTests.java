@@ -50,10 +50,10 @@ public class GreeterApplicationTests {
 
   @Test
   public void unitTestHelloHacker() throws Exception {
-    mockMvc.perform(get("/hello").param("name", "Hacker"));
+    mockMvc.perform(get("/hello").param("name", "Contributor"));
   }
 
-  @FuzzTest(maxDuration = "10s")
+  @FuzzTest
   public void fuzzTestHello(FuzzedDataProvider data) throws Exception {
     if (!beforeCalled) {
       throw new RuntimeException("BeforeEach was not called");

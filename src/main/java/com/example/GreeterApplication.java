@@ -16,6 +16,8 @@
 
 package com.example;
 
+import com.code_intelligence.jazzer.api.FuzzerSecurityIssueMedium;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,10 +28,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class GreeterApplication {
   @GetMapping("/hello")
-  public String insecureHello(@RequestParam(required = false, defaultValue = "World") String name)
-      throws Exception {
+  public String insecureHello(@RequestParam(required = false, defaultValue = "World") String name) {
+    // We trigger an exception in the special case where the name is "attacker". This shows
+    // how CI Fuzz can find this out and generates a test case triggering the exception
+    // guarded by this check.
+    // Black-box approaches lack insights into the code and thus cannot handle these cases.
     if (name.equalsIgnoreCase("attacker")) {
-      throw new Exception("We panic when trying to greet an attacker!");
+      // We throw an exception here to mimic the situation that something unexpected
+      // occurred while handling the request.
+      throw new FuzzerSecurityIssueMedium("We panic when trying to greet an attacker!");
     }
     return "Hello " + name + "!";
   }
