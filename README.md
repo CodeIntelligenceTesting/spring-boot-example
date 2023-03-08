@@ -140,5 +140,5 @@ public class GreeterApplicationTests {
    your tests.
 
 # Conclusion
-In this short tutorial, we have shown how to use CI Fuzz CLI to test your API. `cifuzz`
+In this short tutorial, we have shown how to use CI Fuzz to test your API. `cifuzz`
 offers many more features, and if you are interested simply `cifuzz help`.
