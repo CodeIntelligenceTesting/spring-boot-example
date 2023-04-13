@@ -55,7 +55,12 @@ public class GreeterApplicationTests {
 
   @Test
   public void unitTestHelloHacker() throws Exception {
-    mockMvc.perform(get("/hello").param("name", "Contributor"));
+    mockMvc.perform(get("/hello").param("name", "attacker"));
+  }
+
+  @Test
+  public void unitTestAddAttacker() throws Exception {
+    mockMvc.perform(get("/add").param("name", "attacker"));
   }
 
   @FuzzTest
@@ -64,7 +69,7 @@ public class GreeterApplicationTests {
       throw new RuntimeException("BeforeEach was not called");
     }
 
-    String name = data.consumeRemainingAsString();
+    String name = data.consumeString(16);
     mockMvc.perform(get("/hello").param("name", name));
   }
 

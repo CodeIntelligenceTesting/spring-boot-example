@@ -24,8 +24,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -34,6 +36,30 @@ import java.sql.SQLException;
 class GreeterApplication {
 
   private static Connection conn;
+
+  public static class User implements Serializable {
+    private static final long serialVersionUID = 123456789L;
+    public String name;
+
+    public User(String name) {
+      name = name;
+    }
+
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+      name = (String) ois.readObject();
+    }
+  }
+
+  public static User deserialize(ByteArrayInputStream stream) throws IOException {
+    ObjectInputStream ois = new ObjectInputStream(stream);
+    try {
+      // Casting the result of readObject() occurs after the deserialization process ends
+      // which make it possible to read any object and can lead to gadget chain attacks
+      return (User) ois.readObject();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
 
   private static void connect()  {
     JdbcDataSource ds = new JdbcDataSource();
@@ -63,18 +89,15 @@ class GreeterApplication {
     if (name.equalsIgnoreCase("attacker")) {
       // We throw an exception here to mimic the situation that something unexpected
       // occurred while handling the request.
-      throw new FuzzerSecurityIssueMedium("We panic when trying to greet an attacker!");
+      String className = name.substring(1);
+      try {
+        Class.forName(className);
+      } catch (ClassNotFoundException e){
+        e.printStackTrace();
+      }
     }
 
-//    UserModel user = new UserModel(name);
-//    ObjectInputStream objectInputStream = (ObjectInputStream) ObjectInputStream.nullInputStream();
-//
-//    try {
-//      UserModel newUser = (UserModel) objectInputStream.readObject();
-//    } catch (IOException | ClassNotFoundException e){
-//      e.printStackTrace();
-//    }
-    return "Hello " + name + "!";
+    return "Hello " + name + "\n";
   }
 
   @GetMapping("/add")
