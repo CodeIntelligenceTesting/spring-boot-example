@@ -18,17 +18,48 @@ package com.example;
 
 import com.code_intelligence.jazzer.api.FuzzerSecurityIssueMedium;
 
+import org.h2.engine.User;
+import org.h2.jdbcx.JdbcDataSource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 @SpringBootApplication
 @RestController
 class GreeterApplication {
+
+  private static Connection conn;
+
+  private static void connect()  {
+    JdbcDataSource ds = new JdbcDataSource();
+    String initialize = "CREATE TABLE IF NOT EXISTS users (id IDENTITY PRIMARY KEY, name VARCHAR(50))";
+
+    ds.setURL("jdbc:h2:mem:database.db");
+    try {
+      conn = ds.getConnection();
+
+      // A dummy database is dynamically created
+      conn.createStatement().execute(initialize);
+      conn.createStatement().execute("INSERT INTO users (name, age) VALUES ('Alice')");
+      conn.createStatement().execute("INSERT INTO users (name, age) VALUES ('Bob')");
+
+
+    } catch (SQLException e){
+      e.printStackTrace();
+    }
+  }
+
   @GetMapping("/hello")
-  public String insecureHello(@RequestParam(required = false, defaultValue = "World") String name) {
+  public String insecureHello(@RequestParam(required = false, defaultValue = "World") String name)  {
     // We trigger an exception in the special case where the name is "attacker". This shows
     // how CI Fuzz can find this out and generates a test case triggering the exception
     // guarded by this check.
@@ -38,10 +69,33 @@ class GreeterApplication {
       // occurred while handling the request.
       throw new FuzzerSecurityIssueMedium("We panic when trying to greet an attacker!");
     }
+
+    UserModel user = new UserModel(name);
+    ObjectInputStream objectInputStream = (ObjectInputStream) ObjectInputStream.nullInputStream();
+
+    try {
+      UserModel newUser = (UserModel) objectInputStream.readObject();
+    } catch (IOException | ClassNotFoundException e){
+      e.printStackTrace();
+    }
     return "Hello " + name + "!";
   }
 
+  @GetMapping("/add")
+  public String insecureAddUser(@RequestParam String name){
+    // This service method inserts the username into a database
+    try {
+      String query = String.format("INSERT INTO users (name) VALUES ('%s')", name);
+      conn.createStatement().execute(query);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return "Added " + name;
+  }
+
   public static void main(String[] args) {
+    connect();
     SpringApplication.run(GreeterApplication.class, args);
   }
 }
