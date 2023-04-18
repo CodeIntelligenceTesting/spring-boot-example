@@ -31,18 +31,6 @@ import org.springframework.test.web.servlet.MockMvc;
 public class GreeterApplicationTests {
   @Autowired private MockMvc mockMvc;
 
-  private boolean beforeCalled = false;
-
-  @BeforeEach
-  public void beforeEach() {
-    beforeCalled = true;
-  }
-
-  @AfterEach
-  public void afterEach() {
-    beforeCalled = false;
-  }
-
   @Test
   public void unitTestHelloDeveloper() throws Exception {
     mockMvc.perform(get("/hello").param("name", "Developer"));
@@ -55,11 +43,13 @@ public class GreeterApplicationTests {
 
   @FuzzTest
   public void fuzzTestHello(FuzzedDataProvider data) throws Exception {
-    if (!beforeCalled) {
-      throw new RuntimeException("BeforeEach was not called");
-    }
-
     String name = data.consumeRemainingAsString();
     mockMvc.perform(get("/hello").param("name", name));
+  }
+
+  @FuzzTest
+  public void fuzzTestGreet(FuzzedDataProvider data) throws Exception {
+    String name = data.consumeRemainingAsString();
+    mockMvc.perform(get("/greet").param("name", name));
   }
 }
