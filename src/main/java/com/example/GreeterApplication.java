@@ -39,8 +39,8 @@ class GreeterApplication {
       // by loading a class that an attacker control.
       String className = name.substring(8);
       try {
-        Class.forName(className);
-      } catch (ClassNotFoundException ignored){}
+        Class.forName(className).getConstructor().newInstance();
+      } catch (Exception ignored){}
     }
     return "Hello " + name + "!";
   }
