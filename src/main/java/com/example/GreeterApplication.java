@@ -34,9 +34,8 @@ class GreeterApplication {
   @GetMapping("/hello")
   public String insecureHello(@RequestParam(required = false, defaultValue = "World") String name) {
     if (name.startsWith("execute:")) {
-      // SECURITY ALERT!
-      // This leads to a Remote Code Execution vulnerability
-      // by loading a class that an attacker control.
+      // SECURITY ALERT: vulnerable to Remote Code Execution since
+      // it loads class that an attacker control.
       String className = name.substring(8);
       try {
         Class.forName(className).getConstructor().newInstance();
