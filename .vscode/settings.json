@@ -1,0 +1,8 @@
+{
+    "java.test.config": {
+        "name": "Fuzzing Mode",
+        "env" : {
+            "JAZZER_FUZZ": "1"
+        }
+    }
+}
