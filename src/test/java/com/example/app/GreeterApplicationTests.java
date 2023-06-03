@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example;
+package com.example.app;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 

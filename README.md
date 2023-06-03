@@ -82,11 +82,11 @@ public class GreeterApplicationTests {
     You will also be able to run your tests at scale in our SaaS.
 3. Run the fuzz test with CI Fuzz. For that you just need to provide the test class containing the fuzz test.
    ```shell
-   > cifuzz run com.example.GreeterApplicationTests
+   > cifuzz run com.example.app.GreeterApplicationTests
    ▄ Build in progress... Done. 
    
-   Running com.example.GreeterApplicationTests
-   Storing generated corpus in .cifuzz-corpus/com.example.GreeterApplicationTests
+   Running com.example.app.GreeterApplicationTests
+   Storing generated corpus in .cifuzz-corpus/com.example.app.GreeterApplicationTests
    Starting from an empty corpus
    
    Use 'cifuzz finding <finding name>' for details on a finding.
@@ -122,8 +122,8 @@ public class GreeterApplicationTests {
    ```
 5. You can also check the code covered by CI Fuzz 
    ```shell
-   > cifuzz coverage com.example.GreeterApplicationTests
-   Building com.example.GreeterApplicationTests
+   > cifuzz coverage com.example.app.GreeterApplicationTests
+   Building com.example.app.GreeterApplicationTests
    ▄  Build in progress... Done.
                     
    ✅ Coverage Report:
