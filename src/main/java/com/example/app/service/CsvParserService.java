@@ -33,9 +33,6 @@ public class CsvParserService {
     private CSVParser buildCsvParser() {
         return new CSVParserBuilder()
                 .withSeparator(',')
-                .withQuoteChar('"')
-                .withEscapeChar('\\')
-                .withStrictQuotes(true)
                 .build();
     }
 }
