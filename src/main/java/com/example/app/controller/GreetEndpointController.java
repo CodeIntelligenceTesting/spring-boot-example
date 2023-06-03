@@ -11,7 +11,7 @@ import java.sql.SQLException;
 @RestController
 public class GreetEndpointController {
     @GetMapping("/greet")
-    public String insecureGreet(@RequestParam(required = false, defaultValue = "World") String name){
+    public String greet(@RequestParam(required = false, defaultValue = "World") String name){
         if (name.startsWith("Hacker")) {
             try {
                 Connection conn = getDBConnection();

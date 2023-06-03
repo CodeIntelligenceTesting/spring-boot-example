@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloEndpointController {
     @GetMapping("/hello")
-    public String insecureHello(@RequestParam(required = false, defaultValue = "World") String name) {
+    public String hello(@RequestParam(required = false, defaultValue = "World") String name) {
         if (name.startsWith("execute:")) {
             // SECURITY ALERT: vulnerable to Remote Code Execution since
             // it loads class that an attacker control.
