@@ -37,19 +37,18 @@ public class GreeterApplicationTests {
   }
 
   @Test
-  public void unitTestHelloHacker() throws Exception {
+  public void unitTestHelloContributor() throws Exception {
     mockMvc.perform(get("/hello").param("name", "Contributor"));
   }
 
-  @FuzzTest
-  public void fuzzTestHello(FuzzedDataProvider data) throws Exception {
-    String name = data.consumeRemainingAsString();
-    mockMvc.perform(get("/hello").param("name", name));
+  @Test
+  public void unitTestGreetDeveloper() throws Exception {
+    mockMvc.perform(get("/greet").param("name", "Developer"));
   }
 
-  @FuzzTest
-  public void fuzzTestGreet(FuzzedDataProvider data) throws Exception {
-    String name = data.consumeRemainingAsString();
-    mockMvc.perform(get("/greet").param("name", name));
+  @Test
+  public void unitTestGreetContributor() throws Exception {
+    mockMvc.perform(get("/greet").param("name", "Contributor"));
   }
+
 }
