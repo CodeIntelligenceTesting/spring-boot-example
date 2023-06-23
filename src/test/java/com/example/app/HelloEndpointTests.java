@@ -16,19 +16,17 @@
 
 package com.example.app;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-
 import com.code_intelligence.jazzer.api.FuzzedDataProvider;
 import com.code_intelligence.jazzer.junit.FuzzTest;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
 @WebMvcTest()
-public class GreeterApplicationTests {
+public class HelloEndpointTests {
   @Autowired private MockMvc mockMvc;
 
   @Test
@@ -41,14 +39,10 @@ public class GreeterApplicationTests {
     mockMvc.perform(get("/hello").param("name", "Contributor"));
   }
 
-  @Test
-  public void unitTestGreetDeveloper() throws Exception {
-    mockMvc.perform(get("/greet").param("name", "Developer"));
-  }
-
-  @Test
-  public void unitTestGreetContributor() throws Exception {
-    mockMvc.perform(get("/greet").param("name", "Contributor"));
+  @FuzzTest
+  public void fuzzTestHello(FuzzedDataProvider data) throws Exception {
+    String name = data.consumeRemainingAsString();
+    mockMvc.perform(get("/hello").param("name", name));
   }
 
 }

@@ -21,27 +21,35 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.8</version>
+		<version>3.1.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<groupId>com.example</groupId>
 	<artifactId>junit-spring-web</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
 	<name>junit-spring-web</name>
 	<description>Demo project for Spring Boot</description>
+
 	<properties>
 		<java.version>11</java.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>2.1.214</version>
+			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
@@ -49,37 +57,22 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>com.code-intelligence</groupId>
 			<artifactId>jazzer-junit</artifactId>
-			<version>0.17.0</version>
+			<version>0.19.0</version>
+			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
 			<version>5.5.2</version>
 		</dependency>
-
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>2.1.212</version>
-			<scope>compile</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>
 			<version>5.9.2</version>
 			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.junit.platform</groupId>
-			<artifactId>junit-platform-launcher</artifactId>
-			<version>1.9.2</version>
 		</dependency>
 	</dependencies>
 
