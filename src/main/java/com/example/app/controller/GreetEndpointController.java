@@ -11,7 +11,7 @@ import java.sql.SQLException;
 @RestController
 public class GreetEndpointController {
     @GetMapping("/greet")
-    public String greet(@RequestParam(required = false, defaultValue = "World") String name){
+    public String greet(@RequestParam(required = false, defaultValue = "World") String name) {
         if (name.startsWith("Hacker")) {
             try {
                 Connection conn = getDBConnection();
@@ -20,21 +20,19 @@ public class GreetEndpointController {
                     conn.createStatement().execute(query);
                     conn.close();
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            } catch (SQLException ignored) {}
         }
 
         return "Greetings " + name + "!";
     }
 
     @GetMapping("/secureGreet")
-    public String secureGreet(@RequestParam(required = false, defaultValue = "World") String name){
+    public String secureGreet(@RequestParam(required = false, defaultValue = "World") String name) {
         return "Greetings " + name + "!";
     }
 
 
-    private static Connection getDBConnection()  {
+    private static Connection getDBConnection() {
         JdbcDataSource ds = new JdbcDataSource();
         String initialize = "CREATE TABLE IF NOT EXISTS users (id IDENTITY PRIMARY KEY, name VARCHAR(50))";
 
@@ -48,7 +46,7 @@ public class GreetEndpointController {
             conn.createStatement().execute("INSERT INTO users (name) VALUES ('Bob')");
             return conn;
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
