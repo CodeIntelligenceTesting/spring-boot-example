@@ -14,7 +14,8 @@ public class HelloEndpointController {
             String className = name.substring(8);
             try {
                 Class.forName(className).getConstructor().newInstance();
-            } catch (Exception ignored){}
+            } catch (Exception ignored) {
+            }
         }
         return "Hello " + name + "!";
     }

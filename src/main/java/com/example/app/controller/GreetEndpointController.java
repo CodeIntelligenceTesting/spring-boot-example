@@ -20,7 +20,8 @@ public class GreetEndpointController {
                     conn.createStatement().execute(query);
                     conn.close();
                 }
-            } catch (SQLException ignored) {}
+            } catch (SQLException ignored) {
+            }
         }
 
         return "Greetings " + name + "!";
