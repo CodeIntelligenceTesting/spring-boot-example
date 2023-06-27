@@ -24,7 +24,7 @@
 ## See https://llvm.org/docs/LibFuzzer.html#options
 engine-args:
   - --instrumentation_includes=com.example.**
-  - -rss_limit_mb=6144
+  - -rss_limit_mb=8192
 
 ## Maximum time to run fuzz tests. The default is to run indefinitely.
 #timeout: 30m
