@@ -42,7 +42,7 @@ jobs:
           cd $CHECKOUT_DIR/
           $GITHUB_WORKSPACE/$CIFUZZ_INSTALL_DIR/bin/cifuzz bundle \
             --commit $GITHUB_SHA \
-            --branch $GITHUB_REF_NAME \
+            --branch $GITHUB_HEAD_REF \
             --output $GITHUB_WORKSPACE/$CHECKOUT_DIR/$FUZZING_ARTIFACT
         shell: "bash"
       - id: start-fuzzing
