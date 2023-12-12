@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @RestController
@@ -16,11 +17,13 @@ public class GreetEndpointController {
             try {
                 Connection conn = getDBConnection();
                 if (conn != null) {
-                    String query = String.format("INSERT INTO users (name) VALUES ('%s')", name);
-                    conn.createStatement().execute(query);
+                    PreparedStatement stmt = conn.prepareStatement("INSERT INTO users (name) VALUES (?)");
+                    stmt.setString(1, name);
+                    stmt.executeUpdate();
                     conn.close();
                 }
-            } catch (SQLException ignored) {}
+            } catch (SQLException ignored) {
+            }
         }
 
         return "Greetings " + name + "!";
