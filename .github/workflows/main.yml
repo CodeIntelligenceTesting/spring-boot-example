@@ -16,7 +16,7 @@ env:
   WEB_APP_ADDRESS: https://app.code-intelligence.com
   # Directory in which the repository will be cloned.
   CHECKOUT_DIR: checkout-dir/
-  CIFUZZ_DOWNLOAD_URL: "https://github.com/CodeIntelligenceTesting/cifuzz/releases/latest/download/cifuzz_installer_linux_amd64"
+  CIFUZZ_DOWNLOAD_URL: "https://github.com/CodeIntelligenceTesting/cifuzz/releases/download/v2.18.0/cifuzz_installer_linux_amd64"
   CIFUZZ_INSTALL_DIR: ./cifuzz
   FUZZING_ARTIFACT: fuzzing-artifact.tar.gz
 jobs:
@@ -42,7 +42,7 @@ jobs:
           cd $CHECKOUT_DIR/
           $GITHUB_WORKSPACE/$CIFUZZ_INSTALL_DIR/bin/cifuzz bundle \
             --commit $GITHUB_SHA \
-            --branch $GITHUB_REF_NAME \
+            --branch $GITHUB_HEAD_REF \
             --output $GITHUB_WORKSPACE/$CHECKOUT_DIR/$FUZZING_ARTIFACT
         shell: "bash"
       - id: start-fuzzing

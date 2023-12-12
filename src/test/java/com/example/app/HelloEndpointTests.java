@@ -27,22 +27,23 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @WebMvcTest()
 public class HelloEndpointTests {
-  @Autowired private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-  @Test
-  public void unitTestHelloDeveloper() throws Exception {
-    mockMvc.perform(get("/hello").param("name", "Developer"));
-  }
+    @Test
+    public void unitTestHelloDeveloper() throws Exception {
+        mockMvc.perform(get("/hello").param("name", "Developer"));
+    }
 
-  @Test
-  public void unitTestHelloContributor() throws Exception {
-    mockMvc.perform(get("/hello").param("name", "Contributor"));
-  }
+    @Test
+    public void unitTestHelloContributor() throws Exception {
+        mockMvc.perform(get("/hello").param("name", "Contributor"));
+    }
 
-  @FuzzTest
-  public void fuzzTestHello(FuzzedDataProvider data) throws Exception {
-    String name = data.consumeRemainingAsString();
-    mockMvc.perform(get("/hello").param("name", name));
-  }
+    @FuzzTest
+    public void fuzzTestHello(FuzzedDataProvider data) throws Exception {
+        String name = data.consumeRemainingAsString();
+        mockMvc.perform(get("/hello").param("name", name));
+    }
 
 }
