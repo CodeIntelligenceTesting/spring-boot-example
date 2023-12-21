@@ -58,12 +58,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.code-intelligence</groupId>
-			<artifactId>jazzer-junit</artifactId>
-			<version>0.19.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
 			<version>5.5.2</version>
@@ -76,26 +70,14 @@
 		</dependency>
 	</dependencies>
 
-	<profiles>
-		<profile>
-			<id>cifuzz</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.jacoco</groupId>
-						<artifactId>jacoco-maven-plugin</artifactId>
-						<configuration>
-							<formats>${cifuzz.report.format}</formats>
-							<outputDirectory>${cifuzz.report.output}</outputDirectory>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
-
-
 	<build>
+		<extensions>
+		  <extension>
+			<groupId>com.code-intelligence</groupId>
+			<artifactId>cifuzz-maven-extension</artifactId>
+			<version>1.1.0</version>
+		  </extension>
+		</extensions>
 		<plugins>
 			<plugin>
 				<groupId>org.jacoco</groupId>
@@ -122,5 +104,16 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	<repositories>
+		<repository>
+			<id>code-intelligence</id>
+			<url>https://gitlab.code-intelligence.com/api/v4/projects/89/packages/maven</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>code-intelligence</id>
+			<url>https://gitlab.code-intelligence.com/api/v4/projects/89/packages/maven</url>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
